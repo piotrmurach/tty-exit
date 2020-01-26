@@ -199,5 +199,17 @@ module TTY
       end
     end
     module_function :exit_code
+
+    # Exit this process with a given status code
+    #
+    # @param [String,Integer] name_or_code
+    #   The name for an exit code or code itself
+    #
+    # @api public
+    def exit_with(name_or_code = :ok, message = nil, io: $stderr)
+      io.print(message) if message
+      ::Kernel.exit(exit_code(name_or_code))
+    end
+    module_function :exit_with
   end # Exit
 end # TTY
