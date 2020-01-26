@@ -2,9 +2,28 @@
   <a href="https://piotrmurach.github.io/tty" target="_blank"><img width="130" src="https://cdn.rawgit.com/piotrmurach/tty/master/images/tty.png" alt="tty logo" /></a>
 </div>
 
-# TTY::Exit
+# TTY::Exit [![Gitter](https://badges.gitter.im/Join%20Chat.svg)][gitter]
+
+[![Gem Version](https://badge.fury.io/rb/tty-exit.svg)][gem]
+[![Build Status](https://secure.travis-ci.org/piotrmurach/tty-exit.svg?branch=master)][travis]
+[![Build status](https://ci.appveyor.com/api/projects/status/rtm3po27ouarfrhf?svg=true)][appveyor]
+[![Code Climate](https://codeclimate.com/github/piotrmurach/tty-exit/badges/gpa.svg)][codeclimate]
+[![Coverage Status](https://coveralls.io/repos/github/piotrmurach/tty-exit/badge.svg)][coverage]
+[![Inline docs](http://inch-ci.org/github/piotrmurach/tty-exit.svg?branch=master)][inchpages]
+
+[gitter]: https://gitter.im/piotrmurach/tty
+[gem]: http://badge.fury.io/rb/tty-exit
+[travis]: http://travis-ci.org/piotrmurach/tty-exit
+[appveyor]: https://ci.appveyor.com/project/piotrmurach/tty-exit
+[codeclimate]: https://codeclimate.com/github/piotrmurach/tty-exit
+[coverage]: https://coveralls.io/github/piotrmurach/tty-exit
+[inchpages]: http://inch-ci.org/github/piotrmurach/tty-exit
 
 > Terminal exit codes.
+
+The goal of this library is to standardize possible exit status codes for command line applications. It attempts to select exit codes as used by POSIX compliant tools on different Unix systems.
+
+**TTY::Exit** provides independent exit codes components for [TTY](https://github.com/piotrmurach/tty) toolkit.
 
 ## Installation
 
