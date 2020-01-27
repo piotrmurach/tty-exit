@@ -48,11 +48,11 @@ To exit from any code use `exit_with` and provide name for the exit status:
 ```ruby
 TTY::Exit.exit_with(:usage_error)
 # => "ERROR: Command line usage error"
-```ruby
+```
 
 Every exit status name corresponds with exit code:
 
-````
+```ruby
 puts $?.exitstatus
 # => 64
 ```
