@@ -221,6 +221,19 @@ module TTY
     }
     private_constant :CODE_TO_EXIT_MESSAGE
 
+    # Check if an exit code is valid, that it's within the 0-255 (inclusive)
+    #
+    # @param [Integer] code
+    #   the code to check
+    #
+    # @return [Boolean]
+    #
+    # @api public
+    def valid?(code)
+      code >= 0 && code <= 255
+    end
+    module_function :valid?
+
     # A user friendly explanation of the exit code
     #
     # @example
@@ -254,7 +267,11 @@ module TTY
           raise Error, "Name '#{name_or_code}' isn't recognized."
         end
       when Numeric
-        name_or_code.to_i
+        if valid?(name_or_code.to_i)
+          name_or_code.to_i
+        else
+          raise Error, "Provided code outside of the range (0 - 255)"
+        end
       else
         raise Error, "Provide a name or a number as an exit code"
       end

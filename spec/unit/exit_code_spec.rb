@@ -71,4 +71,10 @@ RSpec.describe TTY::Exit, "#exit_code" do
       TTY::Exit.exit_code(Object.new)
     }.to raise_error(TTY::Exit::Error, "Provide a name or a number as an exit code")
   end
+
+  it "raises when code is outside of the allowed range of (0 - 255)" do
+    expect {
+      TTY::Exit.exit_code(666)
+    }.to raise_error(TTY::Exit::Error, "Provided code outside of the range (0 - 255)")
+  end
 end
