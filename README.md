@@ -43,7 +43,40 @@ Or install it yourself as:
 
 ## 1. Usage
 
+To exit from any code use `exit_with` and provide name for the exit status:
+
 ```ruby
+TTY::Exit.exit_with(:usage_error)
+# => "ERROR: Command line usage error"
+```ruby
+
+Every exit status name corresponds with exit code:
+
+````
+puts $?.exitstatus
+# => 64
+```
+
+You can also include it as a module:
+
+```ruby
+class Command
+  include TTY::Exit
+
+  def execute
+    exit_with(:config_error)
+  end
+end
+```
+
+This will print an error message and return appropriate exit status:
+
+```ruby
+cmd = Command.new
+cmd.execute
+# => "ERROR: Configuration Error"
+puts $?.exitstatus
+# => 78
 ```
 
 ## Development
