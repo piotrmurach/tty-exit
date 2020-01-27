@@ -1,4 +1,4 @@
-require_relative 'lib/tty/exit/version'
+require_relative "lib/tty/exit/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "tty-exit"
