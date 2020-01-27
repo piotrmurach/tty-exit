@@ -15,7 +15,8 @@ module TTY
     # Missing keyword or command, or permission problem
     # (and diff return code on a failed binary file comparison).
     EX_SHELL_MISUSE = 2
-  # The start base code to reduce possibility of clashing with other
+
+    # The start base code to reduce possibility of clashing with other
     # exit statuses that programs may already run.
     EX_BASE = 64
 
@@ -186,6 +187,66 @@ module TTY
     }
     private_constant :NAME_TO_EXIT_CODE
 
+    CODE_TO_EXIT_MESSAGE = {
+      EX_SUCCESS => "Successful termination",
+      EX_ERROR => "An error occurred",
+      EX_SHELL_MISUSE => "Misuse of shell builtins",
+
+      EX_USAGE_ERROR => "Command line usage error",
+      EX_DATA_ERROR => "Data format error",
+      EX_NO_INPUT => "Cannot open input",
+      EX_NO_USER => "User name unknown",
+      EX_NO_HOST => "Host name unknown",
+      EX_SERVICE_UNAVAILABLE => "Service unavailable",
+      EX_SOFTWARE_ERROR => "Internal software error",
+      EX_SYSTEM_ERROR => "System error (e.g. can't fork)",
+      EX_SYSTEM_FILE_MISSING => "Critical OS file missing",
+      EX_CANT_CREATE => "Can't create user output file",
+      EX_IO_ERROR => "Input/output error",
+      EX_TEMP_FAIL => "Temp failure, user is invited to retry",
+      EX_PROTOCOL => "Remote error in protocol",
+      EX_NO_PERM => "Permission denied",
+      EX_CONFIG_ERROR => "Configuration error",
+
+      EX_CANNOT_EXECUTE => "Command invoked cannot execute",
+      EX_COMMAND_NOT_FOUND => "Command not found",
+      EX_INVALID_ARGUMENT => "Invalid argument",
+
+      EX_HANGUP => "Hangup detected on controlling terminal or death of controlling process.",
+      EX_INTERRUPT => "Interrupted by Control-C",
+      EX_QUIT => "Quit program",
+      EX_ABORT => "Abort program",
+      EX_KILL => "Kill program",
+      EX_MEMORY_ERROR => "Segmentation fault",
+    }
+    private_constant :CODE_TO_EXIT_MESSAGE
+
+    # A user friendly explanation of the exit code
+    #
+    # @example
+    #   TTY::Exit.exit_message(:usage_error)
+    #   # => "Command line usage error"
+    #
+    # @param [String,Integer] name_or_code
+    #
+    # @api public
+    def exit_message(name_or_code = :ok)
+      CODE_TO_EXIT_MESSAGE[exit_code(name_or_code)] || ""
+    end
+    module_function :exit_message
+
+    # Provide exit code for a name or status
+    #
+    # @example
+    #   TTY::Exit.exit_code(:usage_error)
+    #   # => 64
+    #
+    # @param [String,Integer] name_or_code
+    #
+    # @return [Integer]
+    #   the exit code
+    #
+    # @api public
     def exit_code(name_or_code = :ok)
       case name_or_code
       when String, Symbol
@@ -204,9 +265,18 @@ module TTY
     #
     # @param [String,Integer] name_or_code
     #   The name for an exit code or code itself
+    # @param [String] message
+    #   The message to print to io stream
+    # @param [IO] io
+    #   The io to print message to
+    #
+    # @return [nil]
     #
     # @api public
     def exit_with(name_or_code = :ok, message = nil, io: $stderr)
+      if message == :default
+        message = "ERROR: #{exit_message(name_or_code)}"
+      end
       io.print(message) if message
       ::Kernel.exit(exit_code(name_or_code))
     end

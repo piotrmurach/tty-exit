@@ -39,4 +39,25 @@ RSpec.describe TTY::Exit, "#exit_with" do
     expect { cmd.execute }.to raise_error(SystemExit)
     expect(output.string).to eq("Wrong arguments")
   end
+
+  it "prints a predefined message with exit code when including a module" do
+    output = StringIO.new
+
+    stub_const("Command", Class.new do
+      include TTY::Exit
+
+      def initialize(io)
+        @io = io
+      end
+
+      def execute
+        exit_with(:usage_error, :default, io: @io)
+      end
+    end)
+
+    cmd = Command.new(output)
+    expect { cmd.execute }.to raise_error(SystemExit)
+
+    expect(output.string).to eq("ERROR: Command line usage error")
+  end
 end
