@@ -3,6 +3,7 @@
 RSpec.describe TTY::Exit, "#exit_code" do
   {
     ok: 0,
+    success: 0,
     error: 1,
     shell_misuse: 2,
 
