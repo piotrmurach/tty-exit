@@ -83,9 +83,16 @@ module TTY
       Code::HANGUP => "Hangup detected on controlling terminal or death of controlling process.",
       Code::INTERRUPT => "Interrupted by Control-C",
       Code::QUIT => "Quit program",
+      Code::ILLEGAL_INSTRUCTION => "Illegal instruction",
+      Code::TRACE_TRAP => "Trace/breakpoint trap",
       Code::ABORT => "Abort program",
       Code::KILL => "Kill program",
-      Code::MEMORY_ERROR => "Segmentation fault",
+      Code::BUS_ERROR => "Access to an undefined portion of a memory object",
+      Code::MEMORY_ERROR => "An invalid virtual memory reference or segmentation fault",
+      Code::PIPE => "Write on a pipe with no one to read it",
+      Code::ALARM => "Alarm clock",
+      Code::USER1 => "User-defined signal 1",
+      Code::USER2 => "User-defined signal 2",
     }
     private_constant :CODE_TO_EXIT_MESSAGE
 

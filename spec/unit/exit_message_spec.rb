@@ -25,6 +25,20 @@ RSpec.describe TTY::Exit, "#exit_message" do
     cannot_execute: "Command invoked cannot execute",
     command_not_found: "Command not found",
     invalid_argument: "Invalid argument",
+
+    hangup: "Hangup detected on controlling terminal or death of controlling process.",
+    interrupt: "Interrupted by Control-C",
+    quit: "Quit program",
+    illegal_instruction: "Illegal instruction",
+    trace_trap: "Trace/breakpoint trap",
+    abort: "Abort program",
+    kill: "Kill program",
+    bus_error: "Access to an undefined portion of a memory object",
+    memory_error: "An invalid virtual memory reference or segmentation fault",
+    pipe: "Write on a pipe with no one to read it",
+    alarm: "Alarm clock",
+    user1: "User-defined signal 1",
+    user2: "User-defined signal 2",
   }.map do |name, message|
     it "converts #{name.inspect} to a message" do
       expect(TTY::Exit.exit_message(name)).to eq(message)
