@@ -127,7 +127,7 @@ module TTY
     #   the exit code
     #
     # @api public
-    public def exit_code(name_or_code = :ok)
+    def exit_code(name_or_code = :ok)
       case name_or_code
       when String, Symbol
         NAME_TO_EXIT_CODE.fetch(name_or_code.to_sym) do
