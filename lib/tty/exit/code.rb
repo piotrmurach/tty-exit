@@ -120,6 +120,7 @@ module TTY
       KILL = SIGNAL_BASE + 9 # 137
 
       # This indicates that program received SIGBUS signal.
+      # Access to an undefined portion of a memory object
       BUS_ERROR = SIGNAL_BASE + 10 # 138
 
       # This indicates that program received SIGSEGV signal.
