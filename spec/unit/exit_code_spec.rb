@@ -37,6 +37,7 @@ RSpec.describe TTY::Exit, "#exit_code" do
     trace_trap: 133,
     abort: 134,
     kill: 137,
+    bus_error: 138,
     memory_error: 139,
     pipe: 141,
     alarm: 142,

@@ -45,6 +45,7 @@ module TTY
       trace_trap: Code::TRACE_TRAP,
       abort: Code::ABORT,
       kill: Code::KILL,
+      bus_error: Code::BUS_ERROR,
       memory_error: Code::MEMORY_ERROR,
       segmentation_fault: Code::MEMORY_ERROR,
       pipe: Code::PIPE,
