@@ -21,7 +21,9 @@
 
 > Terminal exit codes.
 
-The goal of this library is to standardize possible exit status codes for command line applications. It attempts to select exit codes as used by POSIX compliant tools on different Unix systems.
+The goal of this library is to standardize possible exit status codes for command line applications. It attempts to select most common exit codes as used by POSIX-compliant tools on different Unix systems.
+
+The exit statuses range from 0 to 255 (inclusive). Any other exit status than 0 indicates a failure of some kind. The exit codes in the range 64-78 are adapted from the OpenBSD [sysexits.h](https://man.openbsd.org/sysexits.3). The codes between 125 and 128 are reserved for shell statuses as defined in [Advanced Bash Scripting Guide, Appendix E](http://tldp.org/LDP/abs/html/exitcodes.html). The codes in the 129-154 range correspond with the fatal signals as defined in [signal](https://man.openbsd.org/signal.3).
 
 **TTY::Exit** provides independent exit codes components for [TTY](https://github.com/piotrmurach/tty) toolkit.
 
