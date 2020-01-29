@@ -60,6 +60,10 @@ RSpec.describe TTY::Exit, "#exit_code" do
     expect(TTY::Exit.exit_code).to eq(0)
   end
 
+  it "uses exit status constant" do
+    expect(TTY::Exit.exit_code).to eq(TTY::Exit::Code::SUCCESS)
+  end
+
   it "fails to find a code for an unknown name" do
     expect {
       TTY::Exit.exit_code(:unknown)
