@@ -25,7 +25,7 @@ The goal of this library is to standardize possible exit status codes for comman
 
 The exit statuses range from 0 to 255 (inclusive). Any other exit status than 0 indicates a failure of some kind. The exit codes in the range 64-78 are adapted from the OpenBSD [sysexits.h](https://man.openbsd.org/sysexits.3). The codes between 125 and 128 are reserved for shell statuses as defined in [Advanced Bash Scripting Guide, Appendix E](http://tldp.org/LDP/abs/html/exitcodes.html). The codes in the 129-154 range correspond with the fatal signals as defined in [signal](https://man.openbsd.org/signal.3).
 
-**TTY::Exit** provides independent exit codes components for [TTY](https://github.com/piotrmurach/tty) toolkit.
+**TTY::Exit** provides independent terminal exit codes component for [TTY](https://github.com/piotrmurach/tty) toolkit.
 
 ## Installation
 
@@ -79,6 +79,78 @@ cmd.execute
 # => "ERROR: Configuration Error"
 puts $?.exitstatus
 # => 78
+```
+
+## 2. API
+
+### 2.1 exit_code
+
+### 2.2 exit_message
+
+### 2.3 exit_with
+
+To exit program with an exit code use `exit_with`. This method accepts a name or a code for the exit status. 
+
+```ruby
+TTY::Exit.exit_with(:usage_error)
+TTY::Exit.exit_with(64)
+```
+
+Both will produce the same outcome.
+
+```ruby
+# => "ERROR: Command line usage error"
+```
+
+Optionally, you can provide a custom message to display to the user.
+
+```ruby
+TTY::Exit.exit_with(:usge_error, "Wrong arguments")
+```
+
+Finally, you can redirect output to a different stream using `:io` option. By default, message is printed to `stderr`:
+
+```ruby
+TTY::Exit.exit_with(:usage_error, io: $stdout)
+```
+
+Since `TTY::Exit` is a module, you can include in your code to get access to all the methods:
+
+```ruby
+class Command
+  include TTY::Exit
+
+  def execute
+    exit_with(:usage_error)
+  end
+end
+```
+
+### 2.4 register_exit
+
+If the provided exit codes don't match your needs, you can add your own using the `register_exit` method. 
+
+For example, to register a custom exit with `:too_long` name and the status `7` that will notify user and programs about too many arguments do:
+
+```ruby
+class Command
+  include TTY::Exit
+
+  register_exit(:too_long, 7, "Argument list too long")
+
+  def execute
+    exit_with(:too_long)
+  end
+end
+```
+
+Then when the command gets run:
+
+```ruby
+cmd = Command.new
+cmd.execute
+# =>
+# ERROR: Argument list too long
 ```
 
 ## Development
