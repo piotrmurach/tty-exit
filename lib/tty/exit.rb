@@ -1,11 +1,21 @@
 # frozen_string_literal: true
 
-require_relative "exit/version"
 require_relative "exit/code"
+require_relative "exit/registry"
+require_relative "exit/version"
 
 module TTY
   module Exit
     Error = Class.new(StandardError)
+
+    # @api private
+    def self.included(base)
+      base.instance_eval do
+        def register_exit(*args)
+          Registry.register_exit(*args)
+        end
+      end
+    end
 
     NAME_TO_EXIT_CODE = {
       ok: Code::SUCCESS,
@@ -119,6 +129,7 @@ module TTY
     #
     # @api public
     def exit_message(name_or_code = :ok)
+      (Registry.exits[name_or_code] || {})[:message] ||
       CODE_TO_EXIT_MESSAGE[exit_code(name_or_code)] || ""
     end
     module_function :exit_message
@@ -138,9 +149,10 @@ module TTY
     def exit_code(name_or_code = :ok)
       case name_or_code
       when String, Symbol
-        NAME_TO_EXIT_CODE.fetch(name_or_code.to_sym) do
-          raise Error, "Name '#{name_or_code}' isn't recognized."
-        end
+        (Registry.exits[name_or_code.to_sym] || {})[:code] ||
+          NAME_TO_EXIT_CODE.fetch(name_or_code.to_sym) do
+            raise Error, "Name '#{name_or_code}' isn't recognized."
+          end
       when Numeric
         if valid?(name_or_code.to_i)
           name_or_code.to_i
