@@ -119,6 +119,21 @@ module TTY
     end
     module_function :valid?
 
+    # Check if an exit code is already defined by Unix system
+    #
+    # @param [Integer] code
+    #   the code to check
+    #
+    # @return [Boolean]
+    #
+    # @api public
+    def exit_reserved?(code)
+      (code >= Code::SUCCESS && code <= Code::SHELL_MISUSE) ||
+        (code >= Code::USAGE_ERROR && code <= Code::CONFIG_ERROR) ||
+        (code >= Code::CANNOT_EXECUTE && code <= Code::USER2)
+    end
+    module_function :exit_reserved?
+
     # A user friendly explanation of the exit code
     #
     # @example
