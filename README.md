@@ -43,23 +43,33 @@ Or install it yourself as:
 
     $ gem install tty-exit
 
+## Contents
+
+* [1. Usage](#1-usage)
+* [2. API](#2-api)
+  * [2.1 exit_code](#21-exit_code)
+  * [2.2 exit_message](#22-exit_message)
+  * [2.3 exit_with](#23-exit_with)
+  * [2.4 register_exit](#24-register_exit)
+  * [2.5 exit_reserved?](#25-exit_reserved?)
+
 ## 1. Usage
 
-To exit from any code use `exit_with` and provide name for the exit status:
+To exit from any program use `exit_with` and provide name for the exit status or the exit code itself:
 
 ```ruby
 TTY::Exit.exit_with(:usage_error)
-# => "ERROR: Command line usage error"
+# => "ERROR(64): Command line usage error"
 ```
 
-Every exit status name corresponds with exit code:
+The above name will resolve to an exit code:
 
 ```ruby
 puts $?.exitstatus
 # => 64
 ```
 
-You can also include it as a module:
+The preferred way is to include **TTY::Exit** module:
 
 ```ruby
 class Command
@@ -76,7 +86,7 @@ This will print an error message and return appropriate exit status:
 ```ruby
 cmd = Command.new
 cmd.execute
-# => "ERROR: Configuration Error"
+# => "ERROR(78): Configuration Error"
 puts $?.exitstatus
 # => 78
 ```
@@ -85,7 +95,47 @@ puts $?.exitstatus
 
 ### 2.1 exit_code
 
+There are many built-in exit codes that can be referenced using a name.
+
+For example to return an exit code denoting success, you can use `:ok` or `:success`:
+
+```ruby
+TTY::Exit.exit_code(:ok) # => 0
+TTY::Exit.exit_code(:success) # => 0
+```
+
+Any other exit status than 0 indicates a failure of some kind. For example, when a command cannot be found use `:not_found`:
+
+```ruby
+TTY::Exit.exit_code(:not_found)
+# => 127
+```
+
+You can also use an exit code directly:
+
+```ruby
+TTY::Exit.exit_code(127)
+# => 127
+```
+
 ### 2.2 exit_message
+
+One of the downsides of exit codes is that they are not very communicative to the user. Why not have both? An exit code and a user friendly message. That's what `exit_message` is for. All the reserved exit codes have corresponding user friendly messages.
+
+For example, when returning exit code `64` for usage error:
+
+```ruby
+TTY::Exit.exit_message(:usage_error)
+TTY::Exit.exit_message(64)
+```
+
+Will return:
+
+```ruby
+# => "ERROR(64): Command line usage error"
+```
+
+The default messages are used by the `exit_with` method and can be overwritten by a custom one.
 
 ### 2.3 exit_with
 
@@ -99,7 +149,7 @@ TTY::Exit.exit_with(64)
 Both will produce the same outcome.
 
 ```ruby
-# => "ERROR: Command line usage error"
+# => "ERROR(64): Command line usage error"
 ```
 
 Optionally, you can provide a custom message to display to the user.
@@ -150,7 +200,16 @@ Then when the command gets run:
 cmd = Command.new
 cmd.execute
 # =>
-# ERROR: Argument list too long
+# ERROR(7): Argument list too long
+```
+
+### 2.5 exit_reserved?
+
+To check if an exit code is already reserved by Unix system use `exit_reserved?`. This is useful in situations where you want to add it your command line application custom exit codes. The check accepts only integer numbers in range 0 to 255 inclusive:
+
+```ruby
+TTY::Exit.exit_reserved?(126) # => true
+TTY::Exit.exit_reserved?(100) # => false
 ```
 
 ## Development
