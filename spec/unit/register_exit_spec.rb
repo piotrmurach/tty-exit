@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 RSpec.describe TTY::Exit, "#register_exit" do
+
+  after { TTY::Exit::Registry.exits.clear }
+
   it "registers a custom exit code and invokes it by name" do
     output = StringIO.new
 
