@@ -134,6 +134,16 @@ module TTY
     end
     module_function :exit_reserved?
 
+    # Check if the exit status was successful.
+    #
+    # @param [Integer] code
+    #
+    # @api public
+    def exit_success?(code)
+      code == Code::SUCCESS
+    end
+    module_function :exit_success?
+
     # A user friendly explanation of the exit code
     #
     # @example
