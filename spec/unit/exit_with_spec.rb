@@ -58,6 +58,6 @@ RSpec.describe TTY::Exit, "#exit_with" do
     cmd = Command.new(output)
     expect { cmd.execute }.to raise_error(SystemExit)
 
-    expect(output.string).to eq("ERROR: Command line usage error")
+    expect(output.string).to eq("ERROR(64): Command line usage error")
   end
 end

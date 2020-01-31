@@ -194,7 +194,7 @@ module TTY
     # @api public
     def exit_with(name_or_code = :ok, message = nil, io: $stderr)
       if message == :default
-        message = "ERROR: #{exit_message(name_or_code)}"
+        message = "ERROR(#{exit_code(name_or_code)}): #{exit_message(name_or_code)}"
       end
       io.print(message) if message
       ::Kernel.exit(exit_code(name_or_code))

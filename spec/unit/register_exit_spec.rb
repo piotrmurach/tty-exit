@@ -24,7 +24,7 @@ RSpec.describe TTY::Exit, "#register_exit" do
     cmd = Command.new(output)
     expect { cmd.execute }.to raise_error(SystemExit)
 
-    expect(output.string).to eq("ERROR: Argument list too long")
+    expect(output.string).to eq("ERROR(7): Argument list too long")
   end
 
   it "registers a custom exit code and invokes it by code" do
@@ -47,7 +47,7 @@ RSpec.describe TTY::Exit, "#register_exit" do
     cmd = Command.new(output)
     expect { cmd.execute }.to raise_error(SystemExit)
 
-    expect(output.string).to eq("ERROR: Argument list too long")
+    expect(output.string).to eq("ERROR(7): Argument list too long")
   end
 
   it "registers already existing code" do
@@ -70,6 +70,6 @@ RSpec.describe TTY::Exit, "#register_exit" do
     cmd = Command.new(output)
     expect { cmd.execute }.to raise_error(SystemExit)
 
-    expect(output.string).to eq("ERROR: Wrong number of arguments")
+    expect(output.string).to eq("ERROR(64): Wrong number of arguments")
   end
 end
