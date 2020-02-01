@@ -5,8 +5,8 @@ Gem::Specification.new do |spec|
   spec.version       = TTY::Exit::VERSION
   spec.authors       = ["Piotr Murach"]
   spec.email         = ["piotr@piotrmurach.com"]
-  spec.summary       = %q{Terminal exit codes}
-  spec.description   = %q{Terminal exit codes}
+  spec.summary       = %q{Terminal exit codes for humans and machines}
+  spec.description   = %q{Terminal exit codes for humans and machines}
   spec.homepage      = "https://ttytoolkit.org"
   spec.license       = "MIT"
   if spec.respond_to?(:metadata=)
