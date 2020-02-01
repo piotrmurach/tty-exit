@@ -114,10 +114,10 @@ module TTY
     # @return [Boolean]
     #
     # @api public
-    def valid?(code)
+    def exit_valid?(code)
       code >= 0 && code <= 255
     end
-    module_function :valid?
+    module_function :exit_valid?
 
     # Check if an exit code is already defined by Unix system
     #
@@ -179,7 +179,7 @@ module TTY
             raise Error, "Name '#{name_or_code}' isn't recognized."
           end
       when Numeric
-        if valid?(name_or_code.to_i)
+        if exit_valid?(name_or_code.to_i)
           name_or_code.to_i
         else
           raise Error, "Provided code outside of the range (0 - 255)"
