@@ -5,7 +5,10 @@ require_relative "exit/registry"
 require_relative "exit/version"
 
 module TTY
+  # Terminal exit codes for humans and machines
   module Exit
+    extend self
+
     Error = Class.new(StandardError)
 
     # @api private
@@ -102,7 +105,7 @@ module TTY
       Code::PIPE => "Write on a pipe with no one to read it",
       Code::ALARM => "Alarm clock",
       Code::USER1 => "User-defined signal 1",
-      Code::USER2 => "User-defined signal 2",
+      Code::USER2 => "User-defined signal 2"
     }.freeze
     private_constant :CODE_TO_EXIT_MESSAGE
 
@@ -117,7 +120,6 @@ module TTY
     def exit_valid?(code)
       code >= 0 && code <= 255
     end
-    module_function :exit_valid?
 
     # Check if an exit code is already defined by Unix system
     #
@@ -132,7 +134,6 @@ module TTY
         (code >= Code::USAGE_ERROR && code <= Code::CONFIG_ERROR) ||
         (code >= Code::CANNOT_EXECUTE && code <= Code::USER2)
     end
-    module_function :exit_reserved?
 
     # Check if the exit status was successful.
     #
@@ -142,7 +143,6 @@ module TTY
     def exit_success?(code)
       code == Code::SUCCESS
     end
-    module_function :exit_success?
 
     # A user friendly explanation of the exit code
     #
@@ -155,9 +155,8 @@ module TTY
     # @api public
     def exit_message(name_or_code = :ok)
       (Registry.exits[name_or_code] || {})[:message] ||
-      CODE_TO_EXIT_MESSAGE[exit_code(name_or_code)] || ""
+        CODE_TO_EXIT_MESSAGE[exit_code(name_or_code)] || ""
     end
-    module_function :exit_message
 
     # Provide a list of reserved status messages
     #
@@ -165,7 +164,6 @@ module TTY
     def exit_messages
       CODE_TO_EXIT_MESSAGE
     end
-    module_function :exit_messages
 
     # Provide exit code for a name or status
     #
@@ -196,7 +194,6 @@ module TTY
         raise Error, "Provide a name or a number as an exit code"
       end
     end
-    module_function :exit_code
 
     # Provide a list of reserved codes
     #
@@ -204,7 +201,6 @@ module TTY
     def exit_codes
       NAME_TO_EXIT_CODE
     end
-    module_function :exit_codes
 
     # Exit this process with a given status code
     #
@@ -225,6 +221,5 @@ module TTY
       io.print(message) if message
       ::Kernel.exit(exit_code(name_or_code))
     end
-    module_function :exit_with
   end # Exit
 end # TTY
