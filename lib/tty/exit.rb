@@ -62,7 +62,7 @@ module TTY
       alarm: Code::ALARM,
       user1: Code::USER1,
       user2: Code::USER2
-    }
+    }.freeze
     private_constant :NAME_TO_EXIT_CODE
 
     CODE_TO_EXIT_MESSAGE = {
@@ -103,7 +103,7 @@ module TTY
       Code::ALARM => "Alarm clock",
       Code::USER1 => "User-defined signal 1",
       Code::USER2 => "User-defined signal 2",
-    }
+    }.freeze
     private_constant :CODE_TO_EXIT_MESSAGE
 
     # Check if an exit code is valid, that it's within the 0-255 (inclusive)
