@@ -21,7 +21,7 @@
 
 > Terminal exit codes for humans and machines.
 
-The goal of this library is to standardize possible exit status codes for command line applications. It attempts to select most common exit codes as used by POSIX-compliant tools on different Unix systems.
+The goal of this library is to provide human friendly and standard way to use exit status codes in command line applications. Instead of saying `exit(64)`, you can say `exit_with(:usage_error)`. Both indicate a failure to the parent process but the `:usage_error` is so much nicer! Wouldn't you agree? That's why `tty-exit` gathers a list of all the most common exit codes as used by POSIX-compliant tools on different Unix systems for you to use.
 
 The exit statuses range from 0 to 255 (inclusive). Any other exit status than 0 indicates a failure of some kind. The exit codes in the range 64-78 are adapted from the OpenBSD [sysexits.h](https://man.openbsd.org/sysexits.3). The codes between 125 and 128 are reserved for shell statuses as defined in [Advanced Bash Scripting Guide, Appendix E](http://tldp.org/LDP/abs/html/exitcodes.html). The codes in the 129-154 range correspond with the fatal signals as defined in [signal](https://man.openbsd.org/signal.3).
 
@@ -57,28 +57,39 @@ Or install it yourself as:
 
 ## 1. Usage
 
-To exit from any program use `exit_with` and provide name for the exit status or the exit code itself:
+To exit from any program use `exit_with` method. Instead of a number, you can use a readable name for the exit status:
 
 ```ruby
 TTY::Exit.exit_with(:usage_error)
-# => "ERROR(64): Command line usage error"
 ```
 
-The above name will resolve to an exit code:
+The above will exit program immediately with an exit code indicating a failure:
 
 ```ruby
 puts $?.exitstatus
 # => 64
 ```
 
-The preferred way is to include **TTY::Exit** module:
+All the reserved exit statuses have a matching exit message. To display a default message, as a second argument to `exit_with` you can pass `:default` value:
+
+```ruby
+TTY::Exit.exit_with(:usage_error, :default)
+```
+
+That will produce the following user friendly message:
+
+```ruby
+# => "ERROR(64): Command line usage error"
+```
+
+The preferred way is to include **TTY::Exit** module in your code:
 
 ```ruby
 class Command
   include TTY::Exit
 
   def execute
-    exit_with(:config_error)
+    exit_with(:config_error, :default)
   end
 end
 ```
@@ -150,7 +161,10 @@ TTY::Exit.exit_with(64)
 
 Both will produce the same outcome.
 
+As a second argument you can specify a user friendly message to be printed to `stderr` before exit. To use predefined messages use `:default` as a value:
+
 ```ruby
+TTY::Exit.exit_with(:usage_error, :default)
 # => "ERROR(64): Command line usage error"
 ```
 
@@ -158,6 +172,7 @@ Optionally, you can provide a custom message to display to the user.
 
 ```ruby
 TTY::Exit.exit_with(:usge_error, "Wrong arguments")
+# => "Wrong arguments"
 ```
 
 Finally, you can redirect output to a different stream using `:io` option. By default, message is printed to `stderr`:
@@ -166,14 +181,14 @@ Finally, you can redirect output to a different stream using `:io` option. By de
 TTY::Exit.exit_with(:usage_error, io: $stdout)
 ```
 
-Since `TTY::Exit` is a module, you can include in your code to get access to all the methods:
+Since `TTY::Exit` is a module, you can include it in your code to get access to all the methods:
 
 ```ruby
 class Command
   include TTY::Exit
 
   def execute
-    exit_with(:usage_error)
+    exit_with(:usage_error, :default)
   end
 end
 ```
@@ -191,7 +206,7 @@ class Command
   register_exit(:too_long, 7, "Argument list too long")
 
   def execute
-    exit_with(:too_long)
+    exit_with(:too_long, :default)
   end
 end
 ```
