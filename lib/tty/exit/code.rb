@@ -2,6 +2,7 @@
 
 module TTY
   module Exit
+    # All reserved exit codes as constants
     module Code
       # No errors
       SUCCESS = 0
