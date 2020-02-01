@@ -19,7 +19,7 @@
 [coverage]: https://coveralls.io/github/piotrmurach/tty-exit
 [inchpages]: http://inch-ci.org/github/piotrmurach/tty-exit
 
-> Terminal exit codes.
+> Terminal exit codes for humans and machines.
 
 The goal of this library is to standardize possible exit status codes for command line applications. It attempts to select most common exit codes as used by POSIX-compliant tools on different Unix systems.
 
@@ -51,7 +51,9 @@ Or install it yourself as:
   * [2.2 exit_message](#22-exit_message)
   * [2.3 exit_with](#23-exit_with)
   * [2.4 register_exit](#24-register_exit)
-  * [2.5 exit_reserved?](#25-exit_reserved?)
+  * [2.5 exit_reserved?](#25-exit_reserved)
+  * [2.6 exit_valid?](#26-exit_valid)
+  * [2.7 exit_success?](#27-exit_success)
 
 ## 1. Usage
 
@@ -210,6 +212,24 @@ To check if an exit code is already reserved by Unix system use `exit_reserved?`
 ```ruby
 TTY::Exit.exit_reserved?(126) # => true
 TTY::Exit.exit_reserved?(100) # => false
+```
+
+### 2.6 exit_valid?
+
+The exit statuses range from 0 to 255 (inclusive). The `exit_valid?` method helps you check if an exit status is within the range or not.
+
+```ruby
+TTY::Exit.exit_valid?(11) # => true
+TTY::Exit.exit_valid?(522) # => false
+```
+
+### 2.7 exit_success?
+
+Any other exit status than 0 indicates a failure of some kind. The `exit_success?` is a more descriptive way to determine if a program succeeded or not.
+
+```ruby
+TTY::Exit.exit_success?(0) # => true
+TTY::Exit.exit_success?(7) # => false
 ```
 
 ## Development
