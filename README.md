@@ -54,6 +54,8 @@ Or install it yourself as:
   * [2.5 exit_reserved?](#25-exit_reserved)
   * [2.6 exit_valid?](#26-exit_valid)
   * [2.7 exit_success?](#27-exit_success)
+  * [2.8 exit_codes](#28-exit_codes)
+  * [2.9 exit_messages](#29-exit_messages)
 
 ## 1. Usage
 
@@ -103,6 +105,8 @@ cmd.execute
 puts $?.exitstatus
 # => 78
 ```
+
+To see the full list of reserved exit codes go to [2.8 exit_codes](#28-exit-codes) section.
 
 ## 2. API
 
@@ -246,6 +250,29 @@ Any other exit status than 0 indicates a failure of some kind. The `exit_success
 TTY::Exit.exit_success?(0) # => true
 TTY::Exit.exit_success?(7) # => false
 ```
+
+### 2.8 exit_codes
+
+You can access all the predefined exit codes and their names with `exit_codes` method:
+
+```ruby
+TTY::Exit.exit_codes
+# =>
+# "{:ok=>0, :success=>0, :error=>1, :shell_misuse=>2, :usage_error=>64, :data_error=>65, ... }"
+```
+
+### 2.9 exit_messages
+
+To see what default messages are for the predefined exit codes use `exit_messages`:
+
+```ruby
+TTY::Exit.exit_messages
+# =>
+# "{0=>"Successful termination", 1=>"An error occurred", 2=>"Misuse of shell builtins", 64=>"Command line usage error", ... }"
+```
+
+The exit statuses range from 0 to 255 (inclusive). Any other exit status than 0 indicates a failure of some kind. The exit codes in the range 64-78 are adapted from the OpenBSD [sysexits.h](https://man.openbsd.org/sysexits.3). The codes between 125 and 128 are reserved for shell statuses as defined in [Advanced Bash Scripting Guide, Appendix E](http://tldp.org/LDP/abs/html/exitcodes.html). The codes in the 129-154 range correspond with the fatal signals as defined in [signal](https://man.openbsd.org/signal.3).
+
 
 ## Development
 
