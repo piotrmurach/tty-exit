@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe TTY::Exit, "#exit_code" do
-  {
+  CODES = {
     ok: 0,
     success: 0,
     error: 1,
@@ -23,7 +23,9 @@ RSpec.describe TTY::Exit, "#exit_code" do
     temp_fail: 75,
     protocol: 76,
     no_perm: 77,
+    no_permission: 77,
     config_error: 78,
+    configuration_error: 78,
 
     cannot_execute: 126,
     not_found: 127,
@@ -39,14 +41,21 @@ RSpec.describe TTY::Exit, "#exit_code" do
     kill: 137,
     bus_error: 138,
     memory_error: 139,
+    segmentation_fault: 139,
     pipe: 141,
     alarm: 142,
     user1: 158,
     user2: 159
-  }.map do |name, code|
+  }.freeze
+
+  CODES.map do |name, code|
     it "converts #{name.inspect} to #{code.inspect} exit code" do
       expect(TTY::Exit.exit_code(name)).to eq(code)
     end
+  end
+
+  it "provides a mapping between names and codes" do
+    expect(TTY::Exit.exit_codes.values).to eq(CODES.values)
   end
 
   it "accepts name as a string" do

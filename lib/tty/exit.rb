@@ -159,6 +159,14 @@ module TTY
     end
     module_function :exit_message
 
+    # Provide a list of reserved status messages
+    #
+    # @api public
+    def exit_messages
+      CODE_TO_EXIT_MESSAGE
+    end
+    module_function :exit_messages
+
     # Provide exit code for a name or status
     #
     # @example
@@ -189,6 +197,14 @@ module TTY
       end
     end
     module_function :exit_code
+
+    # Provide a list of reserved codes
+    #
+    # @api public
+    def exit_codes
+      NAME_TO_EXIT_CODE
+    end
+    module_function :exit_codes
 
     # Exit this process with a given status code
     #

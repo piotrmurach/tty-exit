@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe TTY::Exit, "#exit_message" do
-  {
+  MESSAGES = {
     success: "Successful termination",
     error: "An error occurred",
     shell_misuse: "Misuse of shell builtins",
@@ -39,9 +39,15 @@ RSpec.describe TTY::Exit, "#exit_message" do
     alarm: "Alarm clock",
     user1: "User-defined signal 1",
     user2: "User-defined signal 2",
-  }.map do |name, message|
+  }.freeze
+
+  MESSAGES.map do |name, message|
     it "converts #{name.inspect} to a message" do
       expect(TTY::Exit.exit_message(name)).to eq(message)
     end
+  end
+
+  it "provides access to mapping between codes and messages" do
+    expect(TTY::Exit.exit_messages.values).to eq(MESSAGES.values)
   end
 end
