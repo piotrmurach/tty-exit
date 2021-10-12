@@ -9,15 +9,15 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/rtm3po27ouarfrhf?svg=true)][appveyor]
 [![Code Climate](https://codeclimate.com/github/piotrmurach/tty-exit/badges/gpa.svg)][codeclimate]
 [![Coverage Status](https://coveralls.io/repos/github/piotrmurach/tty-exit/badge.svg)][coverage]
-[![Inline docs](http://inch-ci.org/github/piotrmurach/tty-exit.svg?branch=master)][inchpages]
+[![Inline docs](https://inch-ci.org/github/piotrmurach/tty-exit.svg?branch=master)][inchpages]
 
 [gitter]: https://gitter.im/piotrmurach/tty
-[gem]: http://badge.fury.io/rb/tty-exit
+[gem]: https://badge.fury.io/rb/tty-exit
 [gh_actions_ci]: https://github.com/piotrmurach/tty-exit/actions?query=workflow%3ACI
 [appveyor]: https://ci.appveyor.com/project/piotrmurach/tty-exit
 [codeclimate]: https://codeclimate.com/github/piotrmurach/tty-exit
 [coverage]: https://coveralls.io/github/piotrmurach/tty-exit
-[inchpages]: http://inch-ci.org/github/piotrmurach/tty-exit
+[inchpages]: https://inch-ci.org/github/piotrmurach/tty-exit
 
 > Terminal exit codes for humans and machines.
 
