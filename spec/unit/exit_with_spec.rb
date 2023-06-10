@@ -16,8 +16,7 @@ RSpec.describe TTY::Exit, "#exit_with" do
       cmd.execute
     }.to raise_error(SystemExit) do |err|
       expect(err.status).to eq(64)
-      message = RSpec::Support::Ruby.truffleruby? ? "SystemExit" : "exit"
-      expect(err.message).to eq(message)
+      expect(err.message).to eq("exit")
     end
   end
 
