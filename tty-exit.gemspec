@@ -15,6 +15,7 @@ Gem::Specification.new do |spec|
       "bug_tracker_uri"   => "https://github.com/piotrmurach/tty-exit/issues",
       "changelog_uri"     => "https://github.com/piotrmurach/tty-exit/blob/master/CHANGELOG.md",
       "documentation_uri" => "https://www.rubydoc.info/gems/tty-exit",
+      "funding_uri"       => "https://github.com/sponsors/piotrmurach",
       "homepage_uri"      => spec.homepage,
       "source_code_uri"   => "https://github.com/piotrmurach/tty-exit"
     }
