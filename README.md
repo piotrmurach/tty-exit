@@ -5,13 +5,13 @@
 # TTY::Exit
 
 [![Gem Version](https://badge.fury.io/rb/tty-exit.svg)][gem]
-[![Actions CI](https://github.com/piotrmurach/tty-exit/workflows/CI/badge.svg?branch=master)][gh_actions_ci]
+[![Actions CI](https://github.com/piotrmurach/tty-exit/actions/workflows/ci.yml/badge.svg)][gh_actions_ci]
 [![Build status](https://ci.appveyor.com/api/projects/status/rtm3po27ouarfrhf?svg=true)][appveyor]
 [![Code Climate](https://codeclimate.com/github/piotrmurach/tty-exit/badges/gpa.svg)][codeclimate]
 [![Coverage Status](https://coveralls.io/repos/github/piotrmurach/tty-exit/badge.svg)][coverage]
 
 [gem]: https://badge.fury.io/rb/tty-exit
-[gh_actions_ci]: https://github.com/piotrmurach/tty-exit/actions?query=workflow%3ACI
+[gh_actions_ci]: https://github.com/piotrmurach/tty-exit/actions/workflows/ci.yml
 [appveyor]: https://ci.appveyor.com/project/piotrmurach/tty-exit
 [codeclimate]: https://codeclimate.com/github/piotrmurach/tty-exit
 [coverage]: https://coveralls.io/github/piotrmurach/tty-exit
